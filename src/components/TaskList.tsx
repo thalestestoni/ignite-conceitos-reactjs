@@ -16,10 +16,8 @@ export function TaskList() {
   const [newTaskId, setNewTaskId]= useState(0);
 
   function handleCreateNewTask() {
-    if (!newTaskTitle) {
-      return;
-    }
-    
+    if (!newTaskTitle) return;
+
     const newTask = {
       id: newTaskId,
       title: newTaskTitle,
@@ -32,21 +30,18 @@ export function TaskList() {
   }
 
   function handleToggleTaskCompletion(id: number) {
-    const updatedTasks = tasks.map(task => {
-      if (task.id === id){
-        task.isComplete =  !task.isComplete;
-      }
-
-      return task;
-    });
+    const updatedTasks = tasks.map(task => task.id === id ? {
+      ...task,
+      isComplete: !task.isComplete
+    }: task);
 
     setTasks(updatedTasks);
   }
 
   function handleRemoveTask(id: number) {
-    const updatedTasks = tasks.filter(task => task.id !== id);
+    const filteredTasks = tasks.filter(task => task.id !== id);
 
-    setTasks(updatedTasks);
+    setTasks(filteredTasks);
   }
 
   return (
