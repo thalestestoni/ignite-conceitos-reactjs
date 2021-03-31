@@ -13,9 +13,22 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [newTaskId, setNewTaskId]= useState(0);
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    if (!newTaskTitle) {
+      return;
+    }
+    
+    const newTask = {
+      id: newTaskId,
+      title: newTaskTitle,
+      isComplete: false
+    }
+
+    setTasks([...tasks, newTask]);
+    setNewTaskId(newTaskId + 1);
+    setNewTaskTitle('');
   }
 
   function handleToggleTaskCompletion(id: number) {
